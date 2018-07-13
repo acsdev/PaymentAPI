@@ -10,7 +10,7 @@ module.exports = function() {
     app.use( bdparse.json() );
 
     consign()
-        .include('controller')
+        .include('controller').then('model')
         .into(app);
 
     return app;

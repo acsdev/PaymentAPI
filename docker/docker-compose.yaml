@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+    mysql_service_account:
+        container_name: mysql_payment
+        restart: always
+        image: mysql/mysql-server:latest
+        ports:
+            - "3307:3306"
+            - "33070:33060"
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=payment
+            - MYSQL_USER=payment
+            - MYSQL_PASSWORD=payment
+        volumes:
+            - "./initdb.d:/docker-entrypoint-initdb.d"

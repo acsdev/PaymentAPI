@@ -4,12 +4,12 @@ services:
     mysql_service_account:
         container_name: mysql_payment
         restart: always
-        image: mysql/mysql-server:latest
+        image: mysql/mysql-server:5.5
         ports:
             - "3307:3306"
             - "33070:33060"
         environment:
-            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_ALLOW_EMPTY_PASSWORD=true
             - MYSQL_DATABASE=payment
             - MYSQL_USER=payment
             - MYSQL_PASSWORD=payment

@@ -2,11 +2,15 @@ var APIUtil = (function() {
 
     var fn = new Function();
 
-    fn.formatMessage = function( messages, arrayValues ) {
-        var msg = '';
-        messages.forEach( m => msg = msg.concat(' ').concat( m ) );
+    fn.formatMessage = function( messages, values ) {
+        
+        var arrarOfMessage = Array.isArray( messages ) ? messages : [messages];
+        var arrarOfValues  = Array.isArray( values ) ? values : [values];
 
-        arrayValues.forEach( function( value, index ) {
+        var msg = '';
+        arrarOfMessage.forEach( m => msg = msg.concat(' ').concat( m ) );
+
+        arrarOfValues.forEach( function( value, index ) {
             var r = new RegExp('\\{'+index+'\\}','g');
             msg = msg.replace( r, value );
         });

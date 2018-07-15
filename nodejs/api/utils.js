@@ -2,32 +2,13 @@ var APIUtil = (function() {
 
     var fn = new Function();
 
-    fn.MSGs = [];
-    fn.MSGs['SAVE_SUCCESS'] = 'Dados salvos com sucesso';
-    fn.MSGs['NR_PROCESSO']  = 'Nº do processo: {0}';
-
-    fn.DATE_FORMAT                          = [];
-    fn.DATE_FORMAT['YYYY_MM_DD']            = 'YYYY-MM-DD';
-    fn.DATE_FORMAT['DD_MM_YYYY']            = 'DD/MM/YYYY';
-    fn.DATE_FORMAT['DD_MM_YYYY_HH_MM']      = 'DD/MM/YYYY HH:MM';
-    fn.DATE_FORMAT['DD_MM_YYYY_HH_MM_SS']   = 'DD/MM/YYYY HH:MM:SS';
-    fn.DATE_FORMAT['HH_MM']                 = 'HH:MM';
-    fn.DATE_FORMAT['HH_MM_SS']              = 'HH:MM:SS';
-
     fn.formatMessage = function( messages, arrayValues ) {
-console.log('AAA')
         var msg = '';
-        if (! $.isArray(messages) ) {
-            msg = messages;
-        } else {
-            $.each(messages, function() {
-                msg = msg.concat(' ').concat( fn.MSGs[this] );
-            });
-        } 
+        messages.forEach( m => msg = msg.concat(' ').concat( m ) );
 
-        $.each(arrayValues, function( index ) {
+        arrayValues.forEach( function( value, index ) {
             var r = new RegExp('\\{'+index+'\\}','g');
-            msg = msg.replace( r, this );
+            msg = msg.replace( r, value );
         });
 
         return msg.trim();
@@ -69,9 +50,6 @@ console.log('AAA')
         return keys.indexOf(key) > -1;
     };
 
-    fn.log = function( msg ) {
-        console.log(msg);
-    }
     return Object.freeze( fn );
 })();
 

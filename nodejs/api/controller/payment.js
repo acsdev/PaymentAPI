@@ -33,9 +33,7 @@ module.exports = function(app) {
                 res.status(400).json( exception );
                 return;
             }
-            console.log(result);
-            console.log( app.utils.formatMessage('Payment created. ID {0}',  'insertId') );
-            //res.location( app.utils.formatMessage('/payments/payment/{0}',  result.insertId));
+            res.location( app.utils.formatMessage(['/payments/payment/{0}'],  [result.insertId]));
             res.status(201).json( payment );
         });
     });

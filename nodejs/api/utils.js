@@ -2,6 +2,16 @@ var APIUtil = (function() {
 
     var fn = new Function();
 
+    fn.Thread = {
+        sleep: function(ms) {
+            var start = Date.now();
+            while (true) {
+                var clock = (Date.now() - start);
+                if (clock >= ms) break;
+            }
+        }
+    };
+
     fn.formatMessage = function( messages, values ) {
         
         var arrarOfMessage = Array.isArray( messages ) ? messages : [messages];

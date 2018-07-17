@@ -1,7 +1,16 @@
 module.exports = function(app) {
     
     app.get('/payments', function(req, res) {
-        res.send('OK');
+        
+        let conn = app.model.connectionFactory();
+        let pDAO = new app.model.paymentDAO(conn);
+        pDAO.deleteAll( function(exception) {
+            if ( exception ) {
+                console.log( exception );
+                return res.status(500).json( exception );
+            }
+            res.send('OK');
+        });
     });
 
     app.post('/payments/payment', function(req, res) {

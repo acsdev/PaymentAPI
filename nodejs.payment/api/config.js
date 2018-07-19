@@ -15,6 +15,7 @@ module.exports = function() {
 
     consign({ cwd: 'api' })
         .then('utils.js')
+        .then('constants.js')
         .then('controller')
         .then('model')
         .into(app);

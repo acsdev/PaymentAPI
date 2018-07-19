@@ -1,6 +1,12 @@
 module.exports = function(app) {
     
-    app.get('/payments', function(req, res) {
+    var _C = app.constants;
+
+    var _getLocation = function ( id ) {
+        return _C.ENDPOINT_NEW_PAYMENT + '/' + id;
+    }
+
+    app.get( _C.ENDPOINT_PAYMENTS, function(req, res) {
         
         let conn = app.model.connectionFactory();
         let pDAO = new app.model.paymentDAO(conn);
@@ -25,7 +31,7 @@ module.exports = function(app) {
     /**
      * ROUTE TO CREATE PAYMENTS
      */
-    app.post('/payments/payment', function(req, res) {
+    app.post( _C.ENDPOINT_NEW_PAYMENT, function(req, res) {
         
         let payment = req.body;
     
@@ -62,7 +68,7 @@ module.exports = function(app) {
                     return;
                 }
                 let payment = resultFIND[0];
-                res.location( app.utils.formatMessage('/payments/payment/{0}',  payment.id));
+                res.location( _getLocation(payment.id) );
                 res.status(201).json( payment );
             });
         });
@@ -71,10 +77,10 @@ module.exports = function(app) {
     /**
      * ROUTE TO CANCEL OR CONFIRM A PAYMENT
      */
-    app.put('/payments/payment/:id/:operation', function(req, res){
+    app.put( _C.ENDPOINT_CONFIRM_CANCEL, function(req, res){
 
         req.assert("id",  "id is required and integer.").notEmpty().isInt();
-        req.assert("operation",  "operation is required and must be CANCEL or CONFIRM.").notEmpty().isIn(['CONFIRM','CANCEL']);
+        req.assert("operation",  "operation is required and must be CANCEL or CONFIRM.").notEmpty().isIn([ _C.STS_CONFIRM, _C.STS_CANCEL ]);
         let errs = req.validationErrors();
         if (errs) {
             console.log("id/operations is not valid, see list of errs bellow");
@@ -109,7 +115,7 @@ module.exports = function(app) {
                 }
                 //
                 let payment = resultFIND[0];
-                res.location( app.utils.formatMessage('/payments/payment/{0}',  payment.id));
+                res.location( _getLocation(payment.id) );
                 res.status(200).json( payment );
             });
         });

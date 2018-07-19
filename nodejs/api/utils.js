@@ -29,6 +29,14 @@ var APIUtil = (function() {
     }
 
     /**
+     * Order this kind of numbers ["0.1", 3.0.1, 2.1.20, 0.4.1, 1.5.7]
+     * @param {*} arrayOfNumbers 
+     */
+    fn.orderNumbersLevels = function(arrayOfNumbers) {
+        return arrayOfNumbers.map( a => a.split('.').map( n => +n+100000 ).join('.') ).sort().map( a => a.split('.').map( n => +n-100000 ).join('.') );
+    }
+
+    /**
      * Forma dates
      */
     fn.formatDate = function( date, format ) {

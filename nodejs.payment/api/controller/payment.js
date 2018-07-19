@@ -6,6 +6,14 @@ module.exports = function(app) {
         return _C.ENDPOINT_NEW_PAYMENT + '/' + id;
     }
 
+    var _getHateoas = function( id ) {
+        return [
+            {rel:'confirmar',uri: _C.ENDPOINT_CONFIRM_CANCEL.replace(/:id/g, id).replace(/:operation/g, _C.STS_CONFIRM), method:'PUT'},
+            {rel:'cancelar',uri: _C.ENDPOINT_CONFIRM_CANCEL.replace(/:id/g, id).replace(/:operation/g, _C.STS_CANCEL), method:'PUT'},
+        ];
+        
+    }
+
     app.get( _C.ENDPOINT_PAYMENTS, function(req, res) {
         
         let conn = app.model.connectionFactory();
@@ -68,8 +76,12 @@ module.exports = function(app) {
                     return;
                 }
                 let payment = resultFIND[0];
+
                 res.location( _getLocation(payment.id) );
-                res.status(201).json( payment );
+                res.status(201).json( {
+                    payment: payment,
+                    links: _getHateoas( payment.id )
+                });
             });
         });
     });
@@ -116,7 +128,10 @@ module.exports = function(app) {
                 //
                 let payment = resultFIND[0];
                 res.location( _getLocation(payment.id) );
-                res.status(200).json( payment );
+                res.status(201).json( {
+                    payment: payment,
+                    links: _getHateoas( payment.id )
+                });
             });
         });
     

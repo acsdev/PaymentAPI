@@ -1,0 +1,16 @@
+{
+    "coin": "USD",
+    "type": "CREDIT",
+    "description": "Pele's movie",
+    "status": "CREATED",
+    "date": "2018-07-17T12:46:05.291Z",
+    "card": {
+        "number":"0000111122223333",
+        "flag":"VISA",
+        "expiration" : {
+            "month":"01",
+            "year":"2018"
+        },
+        "cvv":"123"
+    }
+}

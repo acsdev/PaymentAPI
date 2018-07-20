@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-    mysql_service_account:
+    mysql_payment:
         container_name: mysql_payment
         restart: always
         image: mysql/mysql-server:5.5
